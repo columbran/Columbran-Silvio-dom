@@ -7,7 +7,7 @@ const productos =
         desc: "Una jugosa hamburguesa de 225 gr. de carne Angus, sazonada con nuestra mezcla de especias y servida con lechuga, tomate, cebolla roja, pepinillos y mayonesa en un pan Kaiser tostado.",
         precio: 999,
         img: '/public/images/f2.png',
-        cantidad:1
+        
     },
 
     {
@@ -17,7 +17,7 @@ const productos =
         desc: "Pomodoro italiano, mozzarella fior di latte, albahaca, aceite de oliva",
         precio: 1200,
         img: '/public/images/f3.png',
-        cantidad:1
+        
     },
 
     {
@@ -27,7 +27,7 @@ const productos =
         desc: "Pasta corta italiana con salsa de tomate italiano, stracciattella, aceite de oliva extra virgen, ajo, tomate cherry y albahaca fresca.",
         precio: 850,
         img: '/public/images/f4.png',
-        cantidad:1
+        
     },
 
     {
@@ -37,7 +37,7 @@ const productos =
         desc: "Deliciosas papas fritas crujientes",
         precio: 600,
         img: '/public/images/f5.png',
-        cantidad:1
+        
     },
 
     {
@@ -47,7 +47,7 @@ const productos =
         desc: "Salsa de tomate, mozzarella fior di latte, rodajas de tomate fresco c/ajo, albahaca, aceite de oliva extra virgen.",
         precio: 1350,
         img: '/public/images/f6.png',
-        cantidad:1
+        
     },
 
     {
@@ -57,7 +57,7 @@ const productos =
         desc: "Pechuga de pollo a la parrilla, queso mozzarella, lechuga y rebanadas de tomate. Servido con aderezo chipotle.",
         precio: 900,
         img: '/public/images/f8.png',
-        cantidad:1
+        
     }
 ];
 
