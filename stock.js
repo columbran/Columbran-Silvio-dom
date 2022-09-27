@@ -62,7 +62,8 @@ const productos =
 ];
 
 
-const carrito = []
+ 
+const carrito = JSON.parse(localStorage.getItem("carrito")) || [];
 
 function pintar() {
     const tienda = document.getElementById('tienda');
@@ -98,6 +99,8 @@ function pintar() {
             
         })
 
+         
+
     })
 
 }
@@ -113,6 +116,7 @@ function agregarPructosCarrito(id){
    if(productoEnCarrito){
     productoEnCarrito.cantidad++;
 
+    
     console.log(carrito);
 
     alert(`ya agregaste ${producto.nombre} desea volver a agregar el mismo?`);
@@ -122,6 +126,8 @@ function agregarPructosCarrito(id){
     producto.cantidad = 1;
     
     carrito.push(producto);
+
+    
 
     console.log(carrito);
 
@@ -181,10 +187,13 @@ function eliminarProductos(index){
     if (carrito[index].cantidad === 0){
 
         carrito.splice(index,1);
+
+        
     }
 
     renderizarCarrito();
     calcularTotal();
+    
 }
 
 function calcularTotal() {
@@ -199,4 +208,13 @@ function calcularTotal() {
     const t = document.getElementById('total');
 
     t.innerHTML = `<h4>$${total}</h4>`
+
+    
+ 
+    localStorage.setItem("carrito", JSON.stringify(carrito));
+
 }
+    
+
+
+
