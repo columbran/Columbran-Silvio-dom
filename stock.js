@@ -6,7 +6,7 @@ const productos =
         tipo: "hamburguesa",
         desc: "Una jugosa hamburguesa de 225 gr. de carne Angus, sazonada con nuestra mezcla de especias y servida con lechuga, tomate, cebolla roja, pepinillos y mayonesa en un pan Kaiser tostado.",
         precio: 999,
-        img: '/public/images/f2.png',
+        img: 'public/images/f2.png',
         
     },
 
@@ -16,7 +16,7 @@ const productos =
         tipo: "pizza",
         desc: "Pomodoro italiano, mozzarella fior di latte, albahaca, aceite de oliva",
         precio: 1200,
-        img: '/public/images/f3.png',
+        img: 'public/images/f3.png',
         
     },
 
@@ -26,7 +26,7 @@ const productos =
         tipo: "pasta",
         desc: "Pasta corta italiana con salsa de tomate italiano, stracciattella, aceite de oliva extra virgen, ajo, tomate cherry y albahaca fresca.",
         precio: 850,
-        img: '/public/images/f4.png',
+        img: 'public/images/f4.png',
         
     },
 
@@ -36,7 +36,7 @@ const productos =
         tipo: "papas",
         desc: "Deliciosas papas fritas crujientes",
         precio: 600,
-        img: '/public/images/f5.png',
+        img: 'public/images/f5.png',
         
     },
 
@@ -46,7 +46,7 @@ const productos =
         tipo: "pizza",
         desc: "Salsa de tomate, mozzarella fior di latte, rodajas de tomate fresco c/ajo, albahaca, aceite de oliva extra virgen.",
         precio: 1350,
-        img: '/public/images/f6.png',
+        img: 'public/images/f6.png',
         
     },
 
@@ -56,11 +56,23 @@ const productos =
         tipo: "hamburguesa",
         desc: "Pechuga de pollo a la parrilla, queso mozzarella, lechuga y rebanadas de tomate. Servido con aderezo chipotle.",
         precio: 900,
-        img: '/public/images/f8.png',
+        img: 'public/images/f8.png',
         
     }
 ];
 
+document.addEventListener('DOMContentLoaded', () => {
+    pintar(productos);
+
+    if (localStorage.getItem('carrito')) {
+        const carrito = obtenerCarritoStorage();
+        renderizarCarrito(carrito);
+        calcularTotal(carrito);
+    }
+})
+
+let contNumber = 0;
+let contador = document.getElementById('contador-carrito');
 
  
 const carrito = JSON.parse(localStorage.getItem("carrito")) || [];
@@ -109,6 +121,8 @@ pintar();
 
 function agregarPructosCarrito(id){
 
+    contNumber++;
+
    let producto = productos.find(producto => producto.id === id);
 
    let productoEnCarrito = carrito.find(producto => producto.id === id)
@@ -133,6 +147,8 @@ function agregarPructosCarrito(id){
 
 
    }
+
+   contador.innerHTML = `<h2>${contNumber}</h2>`;
     
    renderizarCarrito();
    calcularTotal();
@@ -174,13 +190,17 @@ function renderizarCarrito(){
        })
 
         carritoHTML.appendChild(producto);
-    })
+    });
    
 }
 
 function eliminarProductos(index){
 
+    
+
     carrito[index].cantidad--;
+
+   
 
     alert(`ELIMINASTE ${carrito[index].nombre} del carrito de compras`);
 
@@ -214,7 +234,9 @@ function calcularTotal() {
     localStorage.setItem("carrito", JSON.stringify(carrito));
 
 }
+
+const obtenerCarritoStorage = () => {
+    const carritoStorage = JSON.parse(localStorage.getItem('carrito'));
+    return carritoStorage;
+};
     
-
-
-
