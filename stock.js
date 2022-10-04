@@ -80,7 +80,7 @@ const carrito = JSON.parse(localStorage.getItem("carrito")) || [];
 function pintar() {
     const tienda = document.getElementById('tienda');
     
-    productos.forEach((p)=> {
+    productos.forEach(({img, nombre, desc, precio, id})=> {
 
         let producto = document.createElement('div')
         producto.classList.add('col-12');
@@ -93,12 +93,12 @@ function pintar() {
 
         producto.innerHTML = `
         <div class="card" style="width: 18rem;">
-            <img class="card-img-top" src="${p.img}">
+            <img class="card-img-top" src="${img}">
         <div class="card-body">
-            <span class="card-title">${p.nombre}</span>
-            <p>${p.desc}</p>
-            <p>$${p.precio}</p>
-            <button class="btn btn-primary halfway-fab wabes-effect waves-light red" id="${p.id}"><i class="material-icons">COMPRAR</i></button>
+            <span class="card-title">${nombre}</span>
+            <p>${desc}</p>
+            <p>$${precio}</p>
+            <button class="btn btn-primary halfway-fab wabes-effect waves-light red" id="${id}"><i class="material-icons">COMPRAR</i></button>
         </div>
         </div>
         `
@@ -107,7 +107,7 @@ function pintar() {
 
         producto.querySelector('button').addEventListener('click', ()=>{
 
-            agregarPructosCarrito(p.id);
+            agregarPructosCarrito(id);
             
         })
 
@@ -137,9 +137,12 @@ function agregarPructosCarrito(id){
 
    }else {
 
-    producto.cantidad = 1;
     
-    carrito.push(producto);
+    
+    carrito.push({
+        ...producto,
+        cantidad: 1
+    });
 
     
 
