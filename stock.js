@@ -135,7 +135,12 @@ function agregarPructosCarrito(id){
     
     console.log(carrito);
 
-    alert(`ya agregaste ${producto.nombre} desea volver a agregar el mismo?`);
+     
+Swal.fire(
+    `ya agregaste ${producto.nombre}`,
+    'desea volver a agregar el mismo?',
+    'question'
+  );
 
    }else {
 
@@ -206,7 +211,12 @@ function eliminarProductos(index){
 
    
 
-    alert(`ELIMINASTE ${carrito[index].nombre} del carrito de compras`);
+    Swal.fire({
+        icon: 'error',
+        title: 'ELIMINASTE',
+        text: `${carrito[index].nombre} del carrito de compras!`
+        
+      });
 
     if (carrito[index].cantidad === 0){
 
