@@ -78,9 +78,11 @@ let contador = document.getElementById('contador-carrito');
 const carrito = JSON.parse(localStorage.getItem("carrito")) || [];
 
 function pintar() {
+    
     const tienda = document.getElementById('tienda');
     
-    productos.forEach(({img, nombre, desc, precio, id})=> {
+    tienda.innerHTML = '';
+    productos.forEach((({img, nombre, desc, precio, id}) => {
 
         let producto = document.createElement('div')
         producto.classList.add('col-12');
@@ -113,7 +115,7 @@ function pintar() {
 
          
 
-    })
+    }));
 
 }
 
@@ -137,8 +139,7 @@ function agregarPructosCarrito(id){
 
    }else {
 
-    
-    
+   
     carrito.push({
         ...producto,
         cantidad: 1
