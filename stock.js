@@ -1,68 +1,68 @@
-const productos =
-[
-    {
-        id: 1,
-        nombre: "Hamburguesa",
-        tipo: "hamburguesa",
-        desc: "Una jugosa hamburguesa de 225 gr. de carne Angus, sazonada con nuestra mezcla de especias y servida con lechuga, tomate, cebolla roja, pepinillos y mayonesa en un pan Kaiser tostado.",
-        precio: 999,
-        img: 'public/images/f2.png',
+// const productos =
+// [
+//     {
+//         id: 1,
+//         nombre: "Hamburguesa",
+//         tipo: "hamburguesa",
+//         desc: "Una jugosa hamburguesa de 225 gr. de carne Angus, sazonada con nuestra mezcla de especias y servida con lechuga, tomate, cebolla roja, pepinillos y mayonesa en un pan Kaiser tostado.",
+//         precio: 999,
+//         img: 'public/images/f2.png',
         
-    },
+//     },
 
-    {
-        id: 2,
-        nombre: "Pizza",
-        tipo: "pizza",
-        desc: "Pomodoro italiano, mozzarella fior di latte, albahaca, aceite de oliva",
-        precio: 1200,
-        img: 'public/images/f3.png',
+//     {
+//         id: 2,
+//         nombre: "Pizza",
+//         tipo: "pizza",
+//         desc: "Pomodoro italiano, mozzarella fior di latte, albahaca, aceite de oliva",
+//         precio: 1200,
+//         img: 'public/images/f3.png',
         
-    },
+//     },
 
-    {
-        id: 3,
-        nombre: "Pasta",
-        tipo: "pasta",
-        desc: "Pasta corta italiana con salsa de tomate italiano, stracciattella, aceite de oliva extra virgen, ajo, tomate cherry y albahaca fresca.",
-        precio: 850,
-        img: 'public/images/f4.png',
+//     {
+//         id: 3,
+//         nombre: "Pasta",
+//         tipo: "pasta",
+//         desc: "Pasta corta italiana con salsa de tomate italiano, stracciattella, aceite de oliva extra virgen, ajo, tomate cherry y albahaca fresca.",
+//         precio: 850,
+//         img: 'public/images/f4.png',
         
-    },
+//     },
 
-    {
-        id: 4,
-        nombre: "Papas fritas",
-        tipo: "papas",
-        desc: "Deliciosas papas fritas crujientes",
-        precio: 600,
-        img: 'public/images/f5.png',
+//     {
+//         id: 4,
+//         nombre: "Papas fritas",
+//         tipo: "papas",
+//         desc: "Deliciosas papas fritas crujientes",
+//         precio: 600,
+//         img: 'public/images/f5.png',
         
-    },
+//     },
 
-    {
-        id: 5,
-        nombre: "Pizza especial",
-        tipo: "pizza",
-        desc: "Salsa de tomate, mozzarella fior di latte, rodajas de tomate fresco c/ajo, albahaca, aceite de oliva extra virgen.",
-        precio: 1350,
-        img: 'public/images/f6.png',
+//     {
+//         id: 5,
+//         nombre: "Pizza especial",
+//         tipo: "pizza",
+//         desc: "Salsa de tomate, mozzarella fior di latte, rodajas de tomate fresco c/ajo, albahaca, aceite de oliva extra virgen.",
+//         precio: 1350,
+//         img: 'public/images/f6.png',
         
-    },
+//     },
 
-    {
-        id: 6,
-        nombre: "Hamburguesa de pollo",
-        tipo: "hamburguesa",
-        desc: "Pechuga de pollo a la parrilla, queso mozzarella, lechuga y rebanadas de tomate. Servido con aderezo chipotle.",
-        precio: 900,
-        img: 'public/images/f8.png',
+//     {
+//         id: 6,
+//         nombre: "Hamburguesa de pollo",
+//         tipo: "hamburguesa",
+//         desc: "Pechuga de pollo a la parrilla, queso mozzarella, lechuga y rebanadas de tomate. Servido con aderezo chipotle.",
+//         precio: 900,
+//         img: 'public/images/f8.png',
         
-    }
-];
+//     }
+// ];
 
 document.addEventListener('DOMContentLoaded', () => {
-    pintar(productos);
+    pintar();
 
     if (localStorage.getItem('carrito')) {
         const carrito = obtenerCarritoStorage();
@@ -71,15 +71,20 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 })
 
-let contNumber = 0;
+function contarCarrito() {
+    let count = carrito.reduce((acc, p) => (acc += p.cantidad), 0);
+    contador.innerHTML = `<h4>${count}</h4>`}
+    
 let contador = document.getElementById('contador-carrito');
 
  
 const carrito = JSON.parse(localStorage.getItem("carrito")) || [];
-
-function pintar() {
+contarCarrito();
+async function pintar() {
     
     const tienda = document.getElementById('tienda');
+    const response = await fetch('productos.json');
+    const productos = await response.json();
     
     tienda.innerHTML = '';
     productos.forEach((({img, nombre, desc, precio, id}) => {
@@ -121,9 +126,11 @@ function pintar() {
 
 pintar();
 
-function agregarPructosCarrito(id){
+async function agregarPructosCarrito(id){
+    const response = await fetch('productos.json');
+    const productos = await response.json();
 
-    contNumber++;
+    contarCarrito();
 
    let producto = productos.find(producto => producto.id === id);
 
@@ -157,8 +164,8 @@ Swal.fire(
 
    }
 
-   contador.innerHTML = `<h2>${contNumber}</h2>`;
-    
+   
+   contarCarrito();
    renderizarCarrito();
    calcularTotal();
 }
@@ -218,13 +225,13 @@ function eliminarProductos(index){
         
       });
 
-    if (carrito[index].cantidad === 0){
+      if (carrito[index].cantidad === 0){
 
         carrito.splice(index,1);
 
-        
-    }
 
+    }
+    contarCarrito();
     renderizarCarrito();
     calcularTotal();
     
